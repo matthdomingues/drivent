@@ -33,17 +33,10 @@ export async function getAddressFromCEP(req: AuthenticatedRequest, res: Response
 
   try {
     const address = await enrollmentsService.getAddressFromCEP(cep);
-    res.status(httpStatus.OK).send({
-      logradouro: address.logradouro,
-      complemento: address.complemento,
-      bairro: address.bairro,
-      cidade: address.localidade,
-      uf: address.uf
-    });
+    return res.status(httpStatus.OK).send(address);
   } catch (error) {
     if (error.name === "NotFoundError") {
       return res.sendStatus(httpStatus.NO_CONTENT);
     }
   }
 }
-

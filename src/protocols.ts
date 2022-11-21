@@ -9,6 +9,16 @@ export type ViaCEPAddress = {
   bairro: string,
   localidade: string,
   uf: string,
+
+};
+
+export type AddressEnrollment = {
+  logradouro: string,
+  complemento: string,
+  bairro: string,
+  cidade: string,
+  uf: string,
+  error?: string
 };
 
 export type RequestError = {
@@ -17,4 +27,43 @@ export type RequestError = {
   statusText: string,
   name: string,
   message: string,
+};
+
+export type TicketType = {
+  id: number
+  name: string
+  price: number
+  isRemote: boolean
+  includesHotel: boolean
+  createdAt: Date
+  updatedAt: Date
+}
+
+export type UserTicket = {
+  id: number;
+  status: string;
+  ticketTypeId: number;
+  enrollmentId: number;
+  TicketType: {
+    id: number;
+    name: string;
+    price: number;
+    isRemote: boolean;
+    includesHotel: boolean;
+    createdAt: Date;
+    updatedAt: Date;
+  };
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+export type UpdatePayment = {
+  ticketId: number;
+  cardData: {
+    issuer: string;
+    number: string;
+    name: string;
+    expirationDate: Date;
+    cvv: number;
+  };
 };
