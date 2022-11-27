@@ -21,7 +21,7 @@ export async function createHotelwithRooms() {
   const room = await prisma.room.create({
     data: {
       name: faker.animal.type(),
-      capacity: faker.datatype.number({ max: 4 }),
+      capacity: faker.datatype.number({ min: 1, max: 4 }),
       hotelId: hotel.id
     }
   });
