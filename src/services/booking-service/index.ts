@@ -47,7 +47,7 @@ async function ticketValidation(userId: number) {
 async function getEnrollment(userId: number) {
   const enrollment = await hotelsRepository.findEnrollmentById(userId);
 
-  if (!enrollment) { throw notFoundError(); }
+  if (!enrollment) { throw forbiddenError(); }
 
   return enrollment;
 }
@@ -55,13 +55,12 @@ async function getEnrollment(userId: number) {
 async function getTicket(enrollmentId: number) {
   const ticket = await hotelsRepository.findTicketByEnrollmentId(enrollmentId);
 
-  if (!ticket) { throw notFoundError(); }
+  if (!ticket) { throw forbiddenError(); }
 
-  if (ticket.status === "RESERVED") { throw unauthorizedError(); }
+  if (ticket.status === "RESERVED") { throw forbiddenError(); }
 
-  if (ticket.TicketType.includesHotel === false || ticket.TicketType.isRemote === true) {
-    throw unauthorizedError();
-  }
+  if (ticket.TicketType.isRemote === true) { throw forbiddenError(); }
+  if (ticket.TicketType.includesHotel === false) { throw forbiddenError(); }
 }
 
 async function bookingValidation(userId: number, bookingId: number) {

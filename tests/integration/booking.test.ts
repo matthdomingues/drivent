@@ -95,7 +95,7 @@ describe("GET /booking", () => {
       const { hotel, room } = await createHotelwithRooms();
       const booking = await createBooking(user.id, room.id);
 
-      const response = await server.get("/booking").set("Authorization", `Bearer ${token}`).send({ userId: user.id });
+      const response = await server.get("/booking").set("Authorization", `Bearer ${token}`);
 
       expect(response.status).toBe(httpStatus.OK);
       expect(response.body).toEqual({
@@ -237,7 +237,7 @@ describe("POST /booking", () => {
       const ticketType = await createTicketType(false, true);
       const ticket = await createTicket(enrollment.id, ticketType.id, TicketStatus.PAID);
       await createPayment(ticket.id, ticketType.price);
-      const { hotel, room } = await createHotelwithFullRoom();
+      const { hotel, room } = await createHotelwithRooms();
       await createBooking(user.id, room.id);
 
       const body = { userId: user.id, roomId: room.id };
@@ -304,7 +304,7 @@ describe("PUT /booking/:bookingId", () => {
       const ticket = await createTicket(enrollment.id, ticketType.id, TicketStatus.PAID);
       await createPayment(ticket.id, ticketType.price);
 
-      const response = await server.post("/booking/1").set("Authorization", `Bearer ${token}`).send(body);
+      const response = await server.put("/booking/1").set("Authorization", `Bearer ${token}`).send(body);
       expect(response.status).toEqual(httpStatus.FORBIDDEN);
     });
 
@@ -317,7 +317,7 @@ describe("PUT /booking/:bookingId", () => {
       const ticket = await createTicket(enrollment.id, ticketType.id, TicketStatus.PAID);
       await createPayment(ticket.id, ticketType.price);
 
-      const response = await server.post("/booking/1").set("Authorization", `Bearer ${token}`).send(body);
+      const response = await server.put("/booking/1").set("Authorization", `Bearer ${token}`).send(body);
       expect(response.status).toEqual(httpStatus.FORBIDDEN);
     });
 
@@ -375,7 +375,7 @@ describe("PUT /booking/:bookingId", () => {
       const ticketType = await createTicketType(false, true);
       const ticket = await createTicket(enrollment.id, ticketType.id, TicketStatus.PAID);
       await createPayment(ticket.id, ticketType.price);
-      const { hotel, room } = await createHotelwithFullRoom();
+      const { hotel, room } = await createHotelwithRooms();
       const booking = await createBooking(user.id, room.id);
 
       const body = { userId: user.id, roomId: room.id };
