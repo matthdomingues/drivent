@@ -28,3 +28,22 @@ export async function createHotelwithRooms() {
 
   return ({ hotel, room });
 }
+
+export async function createHotelwithFullRoom() {
+  const hotel = await prisma.hotel.create({
+    data: {
+      name: faker.company.companyName(),
+      image: faker.image.business()
+    }
+  });
+
+  const room = await prisma.room.create({
+    data: {
+      name: faker.animal.type(),
+      capacity: 1,
+      hotelId: hotel.id
+    }
+  });
+
+  return ({ hotel, room });
+}
